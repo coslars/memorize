@@ -60,5 +60,8 @@ passport.deserializeUser(authService.deserializeUser);
 require('./api/routes')(app);
 
 // listen (start app with node server.js) ======================================
-app.listen(8081);
-console.log("App listening on port 8081");
+
+var port = Number(process.env.PORT || 5000);
+
+app.listen(port);
+console.log("App listening on port " + port);
