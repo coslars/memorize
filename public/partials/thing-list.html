@@ -1,0 +1,19 @@
+<h2>Things you have memorized</h2>
+
+<!-- Any non field errors go here -->
+<div id="divAlerts">
+  <alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">{{alert.msg}}</alert>
+</div>
+
+<div class="gridStyle" ng-grid="gridOptions"></div>
+
+<br>
+
+<div class="row">
+  <div class="col-md-4">  	
+  	<button class="btn btn-default btn-sm" type="button" ng-click="edit()">Edit</button>  	
+  	<button class="btn btn btn-default btn-sm" type="button" ng-click="deleteId()">Delete</button>
+  	<button class="btn btn-primary btn-sm" type="button" ng-click="addNew()">Add New</button>
+  </div>
+  <div class="col-md-8"></div>      
+</div> 

@@ -1,0 +1,42 @@
+<div class="row">
+	<div class='col-md-12'>
+	  <h2>Detail for this User</h2>	
+	  
+	  <!-- Any non field errors go here -->
+	  <div id="divAlerts">
+	    <alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">{{alert.msg}}</alert>
+	  </div>	    
+	  
+	  <form ng-submit="save()" name="mainForm" id="mainForm">
+	    <input type="hidden" name="id" value="{{formData._id}}" />		 
+		  
+		<div id="firstNameFormGroup" class="form-group">
+		  <label for="desc">First Name</label>
+	      <input type="text" name="firstName" id="firstName" class="form-control" ng-model="formData.firstName" />
+	      <span class="help-block" ng-show="mainForm.firstName.$error.serverMessage">{{mainForm.firstName.$error.serverMessage}}</span>
+		</div>
+	
+		<div id="lastNameFormGroup" class="form-group">
+		  <label for="desc">Last Name</label>
+	      <input type="text" name="lastName" id="lastName" class="form-control" ng-model="formData.lastName">
+	      <span class="help-block" ng-show="mainForm.lastName.$error.serverMessage">{{mainForm.lastName.$error.serverMessage}}</span>
+		</div>
+		
+		<div id="userNameFormGroup" class="form-group">
+		  <label for="desc">User Name</label>
+	      <input type="text" name="userName" id="userName" class="form-control" ng-model="formData.userName">
+	      <span class="help-block" ng-show="mainForm.userName.$error.serverMessage">{{mainForm.userName.$error.serverMessage}}</span>
+		</div>
+		
+		<div id="passwordFormGroup" class="form-group">
+		  <label for="desc">Password</label>
+	      <input type="password" name="password" id="password" class="form-control" ng-model="formData.password">
+	      <span class="help-block" ng-show="mainForm.password.$error.serverMessage">{{mainForm.password.$error.serverMessage}}</span>
+		</div>				
+
+		<div class="form-group">
+		  	<button class="btn btn-default btn-sm" type="button" ng-click="cancel()">Cancel</button>
+		    <button class="btn btn-primary btn-sm" type="submit">Save</button>
+		</div>				
+	</form>
+</div>

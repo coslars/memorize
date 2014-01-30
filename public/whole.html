@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="memorizeApp">
+  <head>
+    <meta charset="utf-8">
+    <title>Memorize Application</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
+  
+    <link rel="stylesheet" href="stylesheets/ng-grid.css" />
+    <link rel="stylesheet" href="stylesheets/style.css" />
+    
+    <script src="js/lib/angular1.2.6/angular.js"></script>
+    <script src="js/lib/angular1.2.6/angular-route.js"></script>
+    <script src="js/lib/angular-ui/ng-grid-2.0.7.min.js"></script>
+    <script src="js/lib/angular-ui/ui-bootstrap-0.9.0.min.js"></script>
+    <script src="js/lib/angular-ui/ui-bootstrap-tpls-0.9.0.min.js"></script>    
+    <script src="js/app.js"></script>
+    <script src="js/clientUtil.js"></script>
+    <script src="js/controllers/controller.js"></script>
+    <script src="js/controllers/loginController.js"></script>
+    <script src="js/controllers/thingController.js"></script>        
+    <script src="js/controllers/userController.js"></script>
+  </head>
+  <body onresize="clientUtil.globalOnResize()">  
+  	<div class="container-fluid container" id="mainContainer">
+  	
+	<div class="row">
+		<div class='col-md-12'>  	
+  	  
+	  <div class="page-header">
+	    <h1>Memorize <small>Bible verse memory</small></h1>
+	    <div id="divUserName" class="userName"></div>
+	  </div>
+
+      <nav id="divMainNav" style="display:none;" role="navigation" class="navbar navbar-inverse">
+        <ul class="nav navbar-nav">
+	      <li><a href="#/things">Things</a></li>
+	      <li><a href="#/users">Users</a></li>
+	    </ul> 
+        <ul class="nav navbar-nav navbar-right" style="padding-right: 15px;">
+	      <li><a href="/logout">Log Out</a></li>
+	    </ul>   	         
+      </nav>
+
+      <div ng-view id='content'></div>
+	</div>
+  </body>
+</html>

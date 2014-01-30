@@ -1,0 +1,24 @@
+{
+  "name": "memorize",
+  "version": "0.0.1",
+  "private": true,
+  "author": "Matt Larson",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "~3.4.7",
+    "mongoose": "~3.8.1",
+    "express-validator": "~1.0.1",
+    "passport-local": "~0.1.6",
+    "passport": "~0.2.0",
+    "mongodb": "~1.3.23"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/coslars/memorize.git"
+  },
+  "engines": {
+    "node": "0.11.x"
+  }
+}
