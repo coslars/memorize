@@ -1,13 +1,9 @@
-<h2>Things you have memorized</h2>
+<h2>Things</h2>
 
 <!-- Any non field errors go here -->
 <div id="divAlerts">
   <alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">{{alert.msg}}</alert>
 </div>
-
-<div class="gridStyle" ng-grid="gridOptions"></div>
-
-<br>
 
 <div class="row">
   <div class="col-md-4">  	
@@ -17,3 +13,7 @@
   </div>
   <div class="col-md-8"></div>      
 </div> 
+
+<br>
+
+<div class="gridStyle" ng-grid="gridOptions"></div>

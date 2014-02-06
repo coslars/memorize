@@ -5,10 +5,6 @@
   <alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">{{alert.msg}}</alert>
 </div>
 
-<div class="gridStyle" ng-grid="gridOptions"></div>
-
-<br>
-
 <div class="row">
   <div class="col-md-4">
   	<button class="btn btn-default btn-sm" type="button" ng-click="edit()">Edit</button>  	
@@ -17,3 +13,7 @@
   </div>
   <div class="col-md-8"></div>      
 </div> 
+
+<br>
+
+<div class="gridStyle" ng-grid="gridOptions"></div>
