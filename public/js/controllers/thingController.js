@@ -101,6 +101,20 @@ memorizeAppControllers.controller('ThingListCtrl', ['$scope', '$http', '$parse',
                 clientUtil.handleErrors(clientUtil.createClientMessage("Please select a record."), $scope, $parse);
             }
         };
+        
+        // Send them to the readonly screen with the detail of the record they selected.
+        $scope.view = function view() {
+
+            if (this.gridOptions.selectedItems.length > 0) {
+
+                // Go back to the list screen
+                clientUtil.changeLocation($location, '/things/view/' + this.gridOptions.selectedItems[0]._id);                
+
+            } else {
+
+                clientUtil.handleErrors(clientUtil.createClientMessage("Please select a record."), $scope, $parse);
+            }
+        };        
 
         // Call the api and delete a record by its id
         $scope.deleteId = function deleteId() {
@@ -206,6 +220,65 @@ memorizeAppControllers.controller('ThingDetailCtrl', ['$scope', '$http', '$route
         if ($scope.id !== undefined) {
 
             $scope.edit();
+        }
+        
+        // Call the method that handles all the global onload functionality, like finding the first
+        // element to put focus to
+        clientUtil.globalOnLoad(sessionService, $location);
+        
+        // CALENDAR OPTIONS
+        clientUtil.setCalendarOptions($scope);
+    }
+]);
+
+/**
+ * The VIEW controller for the memorize function
+ */
+memorizeAppControllers.controller('ThingViewCtrl', ['$scope', '$http', '$routeParams', '$parse', 'sessionService', 'thingControllerService', '$location', 
+    function ($scope, $http, $routeParams, $parse, sessionService, thingControllerService, $location) {
+
+        'use strict';
+
+        // Create an empty object to hold the form data
+        $scope.formData = {};
+
+        // Set the id, which may be empty from the passed in id
+        $scope.id = $routeParams.thingId;
+
+        // Call the api and get the object for the passed in id
+        $scope.view = function view() {
+
+            $http.get('/api/thing/' + $scope.id).success(function (thing) {
+
+                $scope.formData.id = thing._id;
+                $scope.formData.usr = thing.usr;
+                $scope.formData.text = thing.text;
+                $scope.formData.desc = thing.desc;
+                $scope.formData.dateCompleted = thing.dateCompleted;
+
+            }).error(function (err) {
+
+                clientUtil.handleErrors(err, $scope, $parse);
+            });
+        };
+
+        // Just re-direct the user to the list page.
+        $scope.cancel = function cancel() {
+            
+            clientUtil.changeLocation($location, '/things');
+        };
+
+        // BUG BUG - This needs to be moved some where more global. But it's job is to
+        //  allow the user to close the alert        
+        $scope.closeAlert = function closeAlert(index) {
+
+            $scope.alerts.splice(index, 1);
+        };
+
+        // If we have a id, then execute the edit function
+        if ($scope.id !== undefined) {
+
+            $scope.view();
         }
         
         // Call the method that handles all the global onload functionality, like finding the first

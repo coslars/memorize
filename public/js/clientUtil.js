@@ -137,9 +137,6 @@ var clientUtil = {
 
                 if (sessionObj !== undefined && sessionObj.authUser !== undefined) {
 
-                    // Display the navigation
-                    clientUtil.displayNav();
-
                     // For pages with inputs on them, set focus to the first one.
                     clientUtil.findFirstFocus();
 
@@ -148,6 +145,9 @@ var clientUtil = {
 
                     // Set the height of the grid
                     clientUtil.setGridHeight();
+                    
+                    // Display the navigation
+                    clientUtil.displayNav();                    
 
                 } else if (!clientUtil.isOnLoginPage()) {
 
@@ -187,6 +187,12 @@ var clientUtil = {
         if (!clientUtil.isOnLoginPage()) {
 
             $('#divMainNav').show();
+            $('#divUserName').show();
+
+        } else {
+            
+            $('#divMainNav').hide();
+            $('#divUserName').hide();
         }
     },
 
@@ -196,7 +202,7 @@ var clientUtil = {
         'use strict';
 
         var isOnLogin = true;
-
+   
         if ($('#divLogin').length === 0) {
 
             isOnLogin = false;
@@ -259,7 +265,7 @@ var clientUtil = {
 
         'use strict';
 
-        $location.url(newLocation, isReplace);
+        $location.path(newLocation);
     },
 
     // If the same URL is called multiple times in a row the browser will go to it's cache

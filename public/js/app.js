@@ -16,11 +16,15 @@ var memorizeApp = angular.module('memorizeApp', [ 'ngRoute', 'memorizeAppControl
             
             if (!currRoute.access.isFree && memorizeApp.sessionObj.authUser === undefined) {
 
+                console.log('Not authenticated.');
                 $location.path("/login");
             }
+            
+            console.log('Ok.');
 
         }).error(function (err) {
 
+            console.log('Error coming back from getting session.  Error Details:' + err)
             $location.path("/login");
         });	    		
 	});
@@ -56,6 +60,12 @@ memorizeApp.config([ '$routeProvider', function($routeProvider) {
         controller : 'ThingDetailCtrl',
         access: {
     		isFree: false
+        }
+    }).when('/things/view/:thingId', {
+        templateUrl : 'partials/thing-view.html',
+        controller : 'ThingViewCtrl',
+        access: {
+            isFree: false
         }
     }).when('/users', {
         templateUrl : 'partials/user-list.html',

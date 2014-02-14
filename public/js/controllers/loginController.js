@@ -33,6 +33,9 @@ memorizeAppControllers.controller('LoginDetailCtrl', ['$scope', '$http', '$parse
             $scope.alerts.splice(index, 1);
         };
         
+        // Show/Hide the navigation
+        clientUtil.displayNav();              
+        
         // For pages with inputs on them, set focus to the first one.
         clientUtil.findFirstFocus();       
     }
