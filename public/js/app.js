@@ -19,8 +19,6 @@ var memorizeApp = angular.module('memorizeApp', [ 'ngRoute', 'memorizeAppControl
                 console.log('Not authenticated.');
                 $location.path("/login");
             }
-            
-            console.log('Ok.');
 
         }).error(function (err) {
 
