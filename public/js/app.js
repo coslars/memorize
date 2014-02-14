@@ -1,5 +1,19 @@
 /* App Module */
-var memorizeApp = angular.module('memorizeApp', [ 'ngRoute', 'memorizeAppControllers', 'ngGrid', 'ui.bootstrap', 'ui.bootstrap.datepicker' ]);
+var memorizeApp = angular.module('memorizeApp', [ 'ngRoute', 'memorizeAppControllers', 'ngGrid', 'ui.bootstrap', 'ui.bootstrap.datepicker' ])
+.config(['$httpProvider', function ($httpProvider) {
+    // enable http caching
+   $httpProvider.defaults.cache = false;
+}])
+.run(['$rootScope', '$location', function($rootScope, $location) {
+	
+	$rootScope.$on('$routeChangeSuccess', function (event, currRoute, prevRoute) {
+		
+		if (!currRoute.access.isFree && memorizeApp.sessionObj.authUser === undefined) {
+
+			$location.path("/login");
+		}
+	});
+}]);
 
 // Initialize our session object with some default values.
 memorizeApp.sessionObj = { dateFormat: 'dd-MMMM-yyyy' };
@@ -10,26 +24,51 @@ memorizeApp.config([ '$routeProvider', function($routeProvider) {
 
     $routeProvider.when('/login', {
         templateUrl : 'partials/login.html',
-        controller : 'LoginDetailCtrl'
+        controller : 'LoginDetailCtrl',
+        access: {
+    		isFree: true
+        }
     }).when('/things', {
         templateUrl : 'partials/thing-list.html',
-        controller : 'ThingListCtrl'
+        controller : 'ThingListCtrl',
+        access: {
+    		isFree: false
+        }
     }).when('/things/detail/:thingId', {
         templateUrl : 'partials/thing-detail.html',
-        controller : 'ThingDetailCtrl'
+        controller : 'ThingDetailCtrl',
+        access: {
+    		isFree: false
+        }
     }).when('/things/detail', {
         templateUrl : 'partials/thing-detail.html',
-        controller : 'ThingDetailCtrl'
+        controller : 'ThingDetailCtrl',
+        access: {
+    		isFree: false
+        }
     }).when('/users', {
         templateUrl : 'partials/user-list.html',
-        controller : 'UserListCtrl'
+        controller : 'UserListCtrl',
+        access: {
+    		isFree: false
+        }
     }).when('/users/detail/:userId', {
         templateUrl : 'partials/user-detail.html',
-        controller : 'UserDetailCtrl'
+        controller : 'UserDetailCtrl',
+        access: {
+    		isFree: false
+        }
     }).when('/users/detail', {
         templateUrl : 'partials/user-detail.html',
-        controller : 'UserDetailCtrl'
+        controller : 'UserDetailCtrl',
+        access: {
+    		isFree: false
+        }
     }).otherwise({
-        redirectTo : '/login'
+        templateUrl : 'partials/login.html',
+        controller : 'LoginDetailCtrl',
+        access: {
+        	isFree: true
+        }
     });
 } ]);

@@ -136,7 +136,7 @@ var clientUtil = {
                     // Set the height of the grid
                     clientUtil.setGridHeight();
                     
-                } else if (!this.isOnLoginPage())  {
+                } else if (!clientUtil.isOnLoginPage())  {
                     
                     // We don't have a populated session object, make em go login
                     clientUtil.changeLocation($location, '/login');
@@ -165,7 +165,7 @@ var clientUtil = {
     // Only show the nav when we are not on the login screen.
     displayNav: function displayNav() {
         
-        if (!this.isOnLoginPage()) {
+        if (!clientUtil.isOnLoginPage()) {
             
             $('#divMainNav').show();
         }
@@ -186,11 +186,19 @@ var clientUtil = {
     
     // Set the height of the angular grid
     setGridHeight: function setGridHeight() {
-              
-        if ($('.gridStyle').length) {
-                   
-            $('.gridStyle').height(window.innerHeight - 400);
-        }
+        
+    	var newHeight = 350;
+    	var takePixels = 400;
+    	
+    	if ($('.gridStyle').length) {
+
+    		if ((window.innerHeight - takePixels) > newHeight) {
+        		
+    			newHeight = window.innerHeight - takePixels;
+    		}
+
+    		$('.gridStyle').height(newHeight);
+    	}
     },
     
     // Set all the options for the Angular calendar
@@ -222,14 +230,16 @@ var clientUtil = {
     },
     
     // Handle window.location.  Angular has it's own way of doing things
-    //  so in case I don't really understand it, I'll just have to changet it here.
+    //  so in case I don't really understand it, I'll just have to change it here.
     changeLocation: function changeLocation($location, newLocation, isReplace) {
         
-        $location.path(newLocation);
-        
-        if (isReplace !== undefined && isReplace === true) {
-            
-            $location.replace();
-        }
+        $location.url(newLocation, isReplace);     
+    },
+    
+    // If the same URL is called multiple times in a row the browser will go to it's cache
+    //  for it's results.  This tricks the browser into thinking it has a new url.
+    cacheBust: function cacheBust(url) {
+    	
+    	return url += '?ts=' + new Date().getTime();
     }
 };

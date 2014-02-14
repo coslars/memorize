@@ -18,7 +18,7 @@ memorizeAppControllers.controller('LoginDetailCtrl', ['$scope', '$http', '$parse
                 memorizeApp.sessionObj = sessionObj;
                 
                 // Go to the Things list screen
-                clientUtil.changeLocation($location, '/things', true);
+                clientUtil.changeLocation($location, '/things', false);
 
             }).error(function (err) {
 

@@ -59,9 +59,9 @@ memorizeAppControllers.controller('ThingListCtrl', ['$scope', '$http', '$parse',
         // Call the API to get a list of all the things that have been memorized
         $scope.getList = function getList() {
 
-            $http.get('/api/thing').success(function (data) {
-
-                $scope.things = data;
+            $http.get(clientUtil.cacheBust('/api/thing'), { cache : false }).success(function (data) {            	
+            	
+                $scope.things = data; 
                 
                 // Set this in the service object so that the list screen can get it.
                 var lastSavedThing = thingControllerService.getSavedThing();
@@ -73,9 +73,12 @@ memorizeAppControllers.controller('ThingListCtrl', ['$scope', '$http', '$parse',
                 }
 
             }).error(function (err) {
-
+            	
                 clientUtil.handleErrors(err, $scope, $parse);
             });
+        	
+            // Reset the selected items array
+            this.gridOptions.selectedItems.length = 0;
         };
 
         // Just re-direct the user to the detail page
@@ -105,12 +108,12 @@ memorizeAppControllers.controller('ThingListCtrl', ['$scope', '$http', '$parse',
             if (this.gridOptions.selectedItems.length > 0) {
 
                 $http.delete('/api/thing/' + this.gridOptions.selectedItems[0]._id).success(function (deletedThing) {
-
-                    // Display a success message to the user
-                    clientUtil.handleSuccess("The Memorized Thing with the description \"" + deletedThing.desc + "\" has been deleted successfully." , $scope, $parse);
                     
                     // Get the list
-                    $scope.getList();
+                    $scope.getList();                	
+                	
+                    // Display a success message to the user
+                    clientUtil.handleSuccess("The Memorized Thing with the description \"" + deletedThing.desc + "\" has been deleted successfully." , $scope, $parse);
 
                 }).error(function (err) {
 

@@ -61,9 +61,9 @@ memorizeAppControllers.controller('UserListCtrl', ['$scope', '$http', '$parse', 
         // Call the API to get a list of all the users that have been memorized
         $scope.getList = function getList() {
 
-            $http.get('/api/user').success(function (data) {
+            $http.get(clientUtil.cacheBust('/api/user')).success(function (data) {
 
-                $scope.users = data;
+                $scope.users = data; 
                 
                 // Set this in the service object so that the list screen can get it.
                 var lastSavedUser = userControllerService.getSavedUser();
@@ -78,6 +78,9 @@ memorizeAppControllers.controller('UserListCtrl', ['$scope', '$http', '$parse', 
 
                 clientUtil.handleErrors(err, $scope, $parse);
             });
+            
+            // Reset the selected items array
+            this.gridOptions.selectedItems.length = 0;
         };
 
         // Just re-direct the user to the detail page
