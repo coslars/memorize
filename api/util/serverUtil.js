@@ -203,6 +203,8 @@ var util = {
     // Set the global headers here
     setHeaders: function setHeaders(req, res, next) {
         
+    	'use strict';
+    	
         res.setHeader("cache-control", "private, max-age=15");
         
         next();
