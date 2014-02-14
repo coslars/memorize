@@ -7,11 +7,22 @@ var memorizeApp = angular.module('memorizeApp', [ 'ngRoute', 'memorizeAppControl
 .run(['$rootScope', '$location', function($rootScope, $location) {
 	
 	$rootScope.$on('$routeChangeSuccess', function (event, currRoute, prevRoute) {
-		
-		if (!currRoute.access.isFree && memorizeApp.sessionObj.authUser === undefined) {
 
-			$location.path("/login");
-		}
+        // Not sure of another way.  We need to see if we have a valid sessio
+        //  for each location change.
+        $http.get('/api/util/getSession').success(function (thisSessionObj) {
+
+            memorizeApp.sessionObj = thisSessionObj;
+            
+            if (!currRoute.access.isFree && memorizeApp.sessionObj.authUser === undefined) {
+
+                $location.path("/login");
+            }
+
+        }).error(function (err) {
+
+            $location.path("/login");
+        });	    		
 	});
 }]);
 
