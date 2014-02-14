@@ -211,15 +211,18 @@ var clientUtil = {
         'use strict';
 
         var newHeight = 350, takePixels = 400;
-
-        if ($('.gridStyle').length) {
-
+        
+        console.log("The windows width: " + window.innerWidth);
+        
+        // Don't resize if we are on a small resolution, it doesn't work right on phones
+        if (window.innerWidth > 1200 && $('.gridStyle').length) {
+            
             if ((window.innerHeight - takePixels) > newHeight) {
 
                 newHeight = window.innerHeight - takePixels;
             }
 
-            $('.gridStyle').height(newHeight);
+            $('.gridStyle').height(newHeight);            
         }
     },
 

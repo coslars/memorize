@@ -4,7 +4,7 @@ var memorizeApp = angular.module('memorizeApp', [ 'ngRoute', 'memorizeAppControl
     // enable http caching
    $httpProvider.defaults.cache = false;
 }])
-.run(['$rootScope', '$location', function($rootScope, $location) {
+.run(['$rootScope', '$location', '$http', function($rootScope, $location, $http) {
 	
 	$rootScope.$on('$routeChangeSuccess', function (event, currRoute, prevRoute) {
 
