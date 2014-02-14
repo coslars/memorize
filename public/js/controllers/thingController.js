@@ -54,14 +54,14 @@ memorizeAppControllers.controller('ThingListCtrl', ['$scope', '$http', '$parse',
                 displayName: 'Date Completed',
                 cellFilter: 'date:\'' + memorizeApp.sessionObj.dateFormat + '\'',
             }]
-        };        
+        };
 
         // Call the API to get a list of all the things that have been memorized
         $scope.getList = function getList() {
 
             $http.get(clientUtil.cacheBust('/api/thing'), { cache : false }).success(function (data) {            	
-            	
-                $scope.things = data; 
+
+                $scope.things = data;
                 
                 // Set this in the service object so that the list screen can get it.
                 var lastSavedThing = thingControllerService.getSavedThing();
