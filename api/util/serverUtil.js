@@ -208,6 +208,16 @@ var util = {
         res.setHeader("cache-control", "private, max-age=15");
         
         next();
+    },
+    
+    // One place to get the user name
+    getSessionUserName: function getSessionUserName(req) {
+        
+        'use strict';        
+        
+        console.log('getUserName: ' + req.session.sessionObj.authUser.userName);
+        
+        return req.session.sessionObj.authUser.userName;
     }
 };
 

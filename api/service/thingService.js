@@ -7,7 +7,7 @@ var serverUtil = require('../util/serverUtil'),
 serviceFunctions.findAll = function findAll(req, res) {
 
     // use mongoose to get all todos in the database
-    Thing.find(function (err, things) {
+    Thing.find({ usr : serverUtil.getSessionUserName(req) }, function (err, things) {
 
         // If we didn't get an error return the thing to the caller
         serverUtil.checkErrorAndResJson(res, err, things);

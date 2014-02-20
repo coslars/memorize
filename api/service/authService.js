@@ -44,6 +44,7 @@ serviceFunctions.validateLogin = function validateLogin(req, res, next) {
         
     } else {
         
+        req.logout();
         next();
     }
 };
