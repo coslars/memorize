@@ -31,8 +31,8 @@ memorizeAppControllers.service('userControllerService', function () {
 /**
  * The LIST controller for the users function
  */
-memorizeAppControllers.controller('UserListCtrl', ['$scope', '$http', '$parse', 'sessionService', 'userControllerService', '$location',  
-    function ($scope, $http, $parse, sessionService, userControllerService, $location) {
+memorizeAppControllers.controller('UserListCtrl', ['$scope', '$http', '$parse', '$modal', 'sessionService', 'userControllerService', '$location',  
+    function ($scope, $http, $parse, $modal, sessionService, userControllerService, $location) {
 
         'use strict';
 
@@ -102,27 +102,44 @@ memorizeAppControllers.controller('UserListCtrl', ['$scope', '$http', '$parse', 
             }
         };
 
-        // Call the api and delete a record by its id
-        $scope.deleteId = function deleteId() {
+        // Show a modal window to confirm the action and then delete if confirmed.
+        $scope.confirmDelete = function () {
 
             if (this.gridOptions.selectedItems.length > 0) {
 
-                $http.delete('/api/user/' + this.gridOptions.selectedItems[0]._id).success(function (deletedUser) {
-
-                    // Display a success message to the user
-                    clientUtil.handleSuccess("The User \"" + deletedUser.firstName + " " + deletedUser.lastName + "\" has been deleted successfully." , $scope, $parse);
-                    
-                    // Get the list
-                    $scope.getList();
-
-                }).error(function (err) {
-
-                    clientUtil.handleErrors(err, $scope, $parse);
+                var idToDelete = this.gridOptions.selectedItems[0]._id;
+                
+                var modalInstance = $modal.open({
+                    templateUrl: 'partials/modal/deleteConfirm.html',
+                    controller: 'DeleteConfirmCtrl',
                 });
+
+                modalInstance.result.then(function (val) {
+                    
+                    $scope.deleteId(idToDelete);
+                }, null);
+                
             } else {
 
                 clientUtil.handleErrors(clientUtil.createClientMessage("Please select a record."), $scope, $parse);
-            }
+            }                       
+        };        
+        
+        // Call the api and delete a record by its id
+        $scope.deleteId = function deleteId(id) {
+
+            $http.delete('/api/user/' + this.gridOptions.selectedItems[0]._id).success(function (deletedUser) {
+
+                // Display a success message to the user
+                clientUtil.handleSuccess("The User \"" + deletedUser.firstName + " " + deletedUser.lastName + "\" has been deleted successfully." , $scope, $parse);
+                
+                // Get the list
+                $scope.getList();
+
+            }).error(function (err) {
+
+                clientUtil.handleErrors(err, $scope, $parse);
+            });
         };
 
         // BUG BUG - This needs to be moved some where more global. But it's job is to

@@ -31,8 +31,8 @@ memorizeAppControllers.service('thingControllerService', function () {
 /**
  * The LIST controller for the memorize function
  */
-memorizeAppControllers.controller('ThingListCtrl', ['$scope', '$http', '$parse', 'sessionService', 'thingControllerService', '$location', 
-    function ($scope, $http, $parse, sessionService, thingControllerService, $location) {
+memorizeAppControllers.controller('ThingListCtrl', ['$scope', '$http', '$parse', '$modal', 'sessionService', 'thingControllerService', '$location', 
+    function ($scope, $http, $parse, $modal, sessionService, thingControllerService, $location) {
 
         'use strict';       
 
@@ -116,27 +116,44 @@ memorizeAppControllers.controller('ThingListCtrl', ['$scope', '$http', '$parse',
             }
         };        
 
-        // Call the api and delete a record by its id
-        $scope.deleteId = function deleteId() {
+        // Show a modal window to confirm the action and then delete if confirmed.
+        $scope.confirmDelete = function () {
 
             if (this.gridOptions.selectedItems.length > 0) {
 
-                $http.delete('/api/thing/' + this.gridOptions.selectedItems[0]._id).success(function (deletedThing) {
-                    
-                    // Get the list
-                    $scope.getList();                	
-                	
-                    // Display a success message to the user
-                    clientUtil.handleSuccess("The Memorized Thing with the description \"" + deletedThing.desc + "\" has been deleted successfully." , $scope, $parse);
-
-                }).error(function (err) {
-
-                    clientUtil.handleErrors(err, $scope, $parse);
+                var idToDelete = this.gridOptions.selectedItems[0]._id;
+                
+                var modalInstance = $modal.open({
+                    templateUrl: 'partials/modal/deleteConfirm.html',
+                    controller: 'DeleteConfirmCtrl',
                 });
+
+                modalInstance.result.then(function (val) {
+                    
+                    $scope.deleteId(idToDelete);
+                }, null);
+                
             } else {
 
                 clientUtil.handleErrors(clientUtil.createClientMessage("Please select a record."), $scope, $parse);
-            }
+            }                       
+        };        
+        
+        // Call the api and delete a record by its id
+        $scope.deleteId = function deleteId(id) {
+
+            $http.delete('/api/thing/' + id).success(function (deletedThing) {
+                
+                // Get the list
+                $scope.getList();                   
+                
+                // Display a success message to the user
+                clientUtil.handleSuccess("The Memorized Thing with the description \"" + deletedThing.desc + "\" has been deleted successfully." , $scope, $parse);
+
+            }).error(function (err) {
+
+                clientUtil.handleErrors(err, $scope, $parse);
+            });
         };
 
         // BUG BUG - This needs to be moved some where more global. But it's job is to
