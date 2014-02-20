@@ -24,13 +24,13 @@
 		
 		<div id="userNameFormGroup" class="form-group">
 		  <label for="desc">User Name</label>
-	      <input type="text" name="userName" id="userName" class="form-control" ng-model="formData.userName">
+	      <input type="text" name="userName" id="userName" class="form-control" ng-model="formData.userName" autocomplete="off">
 	      <span class="help-block" ng-show="mainForm.userName.$error.serverMessage">{{mainForm.userName.$error.serverMessage}}</span>
 		</div>
 		
 		<div id="passwordFormGroup" class="form-group">
 		  <label for="desc">Password</label>
-	      <input type="password" name="password" id="password" class="form-control" ng-model="formData.password">
+	      <input type="password" name="password" id="password" class="form-control" ng-model="formData.password" autocomplete="off">
 	      <span class="help-block" ng-show="mainForm.password.$error.serverMessage">{{mainForm.password.$error.serverMessage}}</span>
 		</div>				
 
