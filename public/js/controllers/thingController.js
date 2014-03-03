@@ -49,11 +49,11 @@ memorizeAppControllers.controller('ThingListCtrl', ['$scope', '$http', '$parse',
             }, {
                 field: 'desc',
                 displayName: 'Description',
-                width : '20%'
+                width : '25%'
             }, {
                 field: 'text.substring(0, 50) + "..."',
                 displayName: 'Text',
-                width : '65%'
+                width : '60%'
             }, {
                 field: 'dateCompleted',
                 displayName: 'Date Completed',
