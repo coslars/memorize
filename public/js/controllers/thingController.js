@@ -48,11 +48,17 @@ memorizeAppControllers.controller('ThingListCtrl', ['$scope', '$http', '$parse',
                 visible: false
             }, {
                 field: 'desc',
-                displayName: 'Description'
+                displayName: 'Description',
+                width : '20%'
+            }, {
+                field: 'text.substring(0, 50) + "..."',
+                displayName: 'Text',
+                width : '65%'
             }, {
                 field: 'dateCompleted',
                 displayName: 'Date Completed',
                 cellFilter: 'date:\'' + memorizeApp.sessionObj.dateFormat + '\'',
+                width : '15%'
             }]
         };
 
