@@ -188,7 +188,16 @@ memorizeAppControllers.controller('ThingDetailCtrl', ['$scope', '$http', '$route
 
         // Create an empty object to hold the form data
         $scope.formData = {};
-
+        
+        // Books of the bible.  The array below holds the data that is loaded into the select
+        //  the property $scope.bookSelected holds the option that is selected, typically this would be bound
+        //  to the page backing model, but in this case we don't persist it.
+        $scope.books = [];
+        $scope.bookSelected = "";
+        
+        // Used to lookup the bible chapter and verse, not persisted.
+        $scope.chapterAndVerse = "";
+        
         // Set the id, which may be empty from the passed in id
         $scope.id = $routeParams.thingId;
 
@@ -225,6 +234,36 @@ memorizeAppControllers.controller('ThingDetailCtrl', ['$scope', '$http', '$route
                 clientUtil.handleErrors(err, $scope, $parse);
             });
         };
+        
+        // Get the books of the bible
+        $scope.getBooks = function getBooks() {
+            
+            $http.get('/api/memorize/booksLookup').success(function (booksData) {
+
+                $scope.books = booksData;
+                
+            }).error(function (err) {
+
+                clientUtil.handleErrors(err, $scope, $parse);
+            });                      
+        };
+
+        // They are searching for a passage for us to load up
+        $scope.lookUpPassage = function lookUpPassage() {
+            
+            var passageToQuery = $scope.bookSelected + "+" + $scope.chapterAndVerse;  
+
+            $http.get('/api/memorize/verseLookup/' + passageToQuery).success(function (passage) {
+
+                // Load up the fields
+                $scope.formData.desc = $scope.bookSelected + " " + $scope.chapterAndVerse;
+                $scope.formData.text = passage;
+
+            }).error(function (err) {
+
+                clientUtil.handleErrors(err, $scope, $parse);
+            });
+        };
 
         // Just re-direct the user to the list page.
         $scope.cancel = function cancel() {
@@ -243,7 +282,10 @@ memorizeAppControllers.controller('ThingDetailCtrl', ['$scope', '$http', '$route
         if ($scope.id !== undefined) {
 
             $scope.edit();
-        }
+        }                
+        
+        // Load the books of the bible
+        $scope.getBooks();
         
         // Call the method that handles all the global onload functionality, like finding the first
         // element to put focus to

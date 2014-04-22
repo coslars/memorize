@@ -8,19 +8,38 @@
 	  </div>	    
 	  
 	  <form ng-submit="save()" name="mainForm" id="mainForm">
-	    <input type="hidden" name="id" value="{{formData._id}}" />		 
-		  
-		<div id="descFormGroup" class="form-group">
-		  <label for="desc">Description</label>
-	      <input type="text" name="desc" id="desc" class="form-control" ng-model="formData.desc">
-	      <span class="help-block" ng-show="mainForm.desc.$error.serverMessage">{{mainForm.desc.$error.serverMessage}}</span>
-		</div>
+	    <input type="hidden" name="id" value="{{formData._id}}" />		   	   
+	    
+	    <div class="highlight">
+			<div id="loadFormGroup" class="form-group">
+			  <label for="desc">Book</label>
+		      <select id="book" class="form-control" ng-model="bookSelected" ng-options="book.name as book.name for book in books">
+		      	<option value="">Select a Book
+		      </select>
+			</div>	    
+	
+			<div id="chapterAndVerseFormGroup" class="form-group">
+			  <label for="chapterAndVerse">Chapter and Verse</label>
+		      <input type="text" name="chapterAndVerse" id="chapterAndVerse" class="form-control" ng-model="chapterAndVerse">
+		      <span class="help-block" ng-show="mainForm.chapterAndVerse.$error.serverMessage">{{mainForm.chapterAndVerse.$error.serverMessage}}</span>
+			</div>		
+
+			<button class="btn btn-primary btn-sm" type="button" ng-click="lookUpPassage()">Look Up Passage</button>
+		</div>	
+		
+		<br>			 		
 		
 		<div id="dateCompletedFormGroup" class="form-group">
 		  <label for="dateCompleted">Date Completed</label>
 	      <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="formData.dateCompleted" is-open="opened" datepicker-options="dateOptions" close-text="Close" />	      
 	      <span class="help-block" ng-show="mainForm.dateCompleted.$error.serverMessage">{{mainForm.dateCompleted.$error.serverMessage}}</span>
-		</div>		
+		</div>			
+		  
+		<div id="descFormGroup" class="form-group">
+		  <label for="desc">Description</label>
+	      <input type="text" name="desc" id="desc" class="form-control" ng-model="formData.desc">
+	      <span class="help-block" ng-show="mainForm.desc.$error.serverMessage">{{mainForm.desc.$error.serverMessage}}</span>
+		</div>						
 	
 		<div id="textFormGroup" class="form-group">
 		  <label for="text">Text</label>		  

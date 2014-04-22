@@ -3,6 +3,7 @@ var serverUtil = require('./util/serverUtil'),
     thingService = require('./service/thingService'),
     userService = require('./service/userService'),
     authService = require('./service/authService'),
+    bibleService = require('./service/bibleService'),
     passport = require('passport');
 
 /*
@@ -114,8 +115,24 @@ module.exports = function (app) {
      * END USER ROUTES 
      */
     
+    /*
+     * BIBLE LOOKUP ROUTES
+     */
     
-    //app.get('/api/memorize/verseLookup/:passage', bibleService.queryPassage);
+    app.get('/api/memorize/verseLookup/:passage', authService.verifyAuthentication, function (req, res, next) {
+        
+        serverUtil.execute(res, bibleService.queryPassage, req, res, next);
+    });
+    
+    app.get('/api/memorize/booksLookup', authService.verifyAuthentication, function (req, res, next) {
+        
+        serverUtil.execute(res, bibleService.queryBooks, req, res, next);
+    });
+    
+    /*
+     * END BIBLE LOOKUP ROUTES 
+     */
+    
     
     // Get the 
     app.get('/api/util/getSession', authService.verifyAuthentication, function (req, res) {

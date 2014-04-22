@@ -50,7 +50,7 @@ var util = {
         var funcName;
         
         funcName = "function name not set";
-        if (func.name !== "") {
+        if ((func !== undefined && func.name !== undefined) && func.name !== "") {
 
             funcName = func.name;
         }

@@ -42,3 +42,11 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 .userName {
 	color: #000000;
 }
+
+.highlight {
+	padding: 9px 14px;
+	margin-bottom: 14px;
+	background-color: #f7f7f9;
+	border: 1px solid #e1e1e8;
+	border-radius: 4px;
+}
